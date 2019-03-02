@@ -21,6 +21,7 @@ public class Persona {
 	private String direccion;
 	private String sexo;
 	private String telefono;
+	private String dni;
 	private Date fechanacimiento;
 
 	@Id
@@ -84,5 +85,13 @@ public class Persona {
 	public void setFechanacimiento(Date fechanacimiento) {
 		this.fechanacimiento = fechanacimiento;
 	}
+	public String getDni() {
+		return dni;
+	}
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+	
+	
 
 }

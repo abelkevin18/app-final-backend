@@ -43,4 +43,11 @@ public class ResultadocuestionarioServiceImpl implements IResultadocuestionarioS
 		
 	}
 
+	@Override
+	public List<Resultadocuestionario> getResultados() {
+		return dao.getResultados();
+	}
+
+
+
 }

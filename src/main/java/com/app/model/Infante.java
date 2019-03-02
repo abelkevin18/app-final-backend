@@ -8,8 +8,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -18,15 +21,16 @@ public class Infante extends Persona implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private String nivelsocioeconomico;
-	private String niveleducacion;
-	private String grado;
 	
-	private List<Historiaclinicapsicologica> historiasclinicas;
+	private Institucioneducativa institucioneducativa;
+	
+	//private List<Historiaclinicapsicologica> historiasclinicas;
 	private List<Cuestionario> cuestionarios;
 	
 	public Infante() {
-		this.historiasclinicas = new ArrayList<>();
+		this.cuestionarios = new ArrayList<>();
 	}
+	
 	
 	@NotEmpty(message ="no puede estar vacio")
 	@Column(length = 2)
@@ -36,33 +40,7 @@ public class Infante extends Persona implements Serializable{
 	public void setNivelsocioeconomico(String nivelsocioeconomico) {
 		this.nivelsocioeconomico = nivelsocioeconomico;
 	}
-	@NotEmpty(message ="no puede estar vacio")
-	@Column(length = 15)
-	public String getNiveleducacion() {
-		return niveleducacion;
-	}
-	public void setNiveleducacion(String niveleducacion) {
-		this.niveleducacion = niveleducacion;
-	}
-	@NotEmpty(message ="no puede estar vacio")
-	@Column(length = 15, nullable = false)
-	public String getGrado() {
-		return grado;
-	}
-	public void setGrado(String grado) {
-		this.grado = grado;
-	}
 	
-
-	@JsonIgnoreProperties(value={"infante","hibernateLazyInitializer","handler"}, allowSetters=true)
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="infante", cascade = CascadeType.ALL)
-	public List<Historiaclinicapsicologica> getHistoriasclinicas() {
-		return historiasclinicas;
-	}
-	public void setHistoriasclinicas(List<Historiaclinicapsicologica> historiasclinicas) {
-		this.historiasclinicas = historiasclinicas;
-	}
-
 
 	@JsonIgnoreProperties(value={"infante","hibernateLazyInitializer","handler"}, allowSetters=true)
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="infante", cascade = CascadeType.ALL)
@@ -72,6 +50,20 @@ public class Infante extends Persona implements Serializable{
 
 	public void setCuestionarios(List<Cuestionario> cuestionarios) {
 		this.cuestionarios = cuestionarios;
+	}
+
+
+	@NotNull(message = "no puede estar vacío, debe elegir una institucion educativa")
+	@JsonIgnoreProperties(value={"infantes","hibernateLazyInitializer","handler"}, allowSetters=true)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idinstitucioneducativa")
+	public Institucioneducativa getInstitucioneducativa() {
+		return institucioneducativa;
+	}
+
+
+	public void setInstitucioneducativa(Institucioneducativa institucioneducativa) {
+		this.institucioneducativa = institucioneducativa;
 	}
 	
 	

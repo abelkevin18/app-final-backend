@@ -31,8 +31,13 @@ public class Cuestionario implements Serializable{
 	private String nombre;
 	private Date fecha;
 	
+	private String niveleducacion;
+	private String grado;
+	
 	private Infante infante;
 	private Profesor profesor;
+	
+	private Programa programa;
 	
 	private List<Detallecuestionario> detallecuestionarios;
 	
@@ -93,6 +98,18 @@ public class Cuestionario implements Serializable{
 	public void setProfesor(Profesor profesor) {
 		this.profesor = profesor;
 	}
+	
+	@NotNull(message = "no puede estar vacío, debe elegir un programa")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idprograma")
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+	public Programa getPrograma() {
+		return programa;
+	}
+
+	public void setPrograma(Programa programa) {
+		this.programa = programa;
+	}
 
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -105,6 +122,23 @@ public class Cuestionario implements Serializable{
 		this.detallecuestionarios = detallecuestionarios;
 	}
 	
+
+	@NotEmpty(message ="no puede estar vacio")
+	@Column(length = 15)
+	public String getNiveleducacion() {
+		return niveleducacion;
+	}
+	public void setNiveleducacion(String niveleducacion) {
+		this.niveleducacion = niveleducacion;
+	}
+	@NotEmpty(message ="no puede estar vacio")
+	@Column(length = 15, nullable = false)
+	public String getGrado() {
+		return grado;
+	}
+	public void setGrado(String grado) {
+		this.grado = grado;
+	}
 	
 	
 	
